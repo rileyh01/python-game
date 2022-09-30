@@ -26,11 +26,9 @@ board_x = 7
 board_y = 6
 
 board = []
+available_colors = ["Red", "Blue"]
 
-space = """
-
-
-"""
+space = """\n \n"""
 
 def generate_board(x = 7, y = 6):
     board.clear()
@@ -97,14 +95,39 @@ def check_for_win():
     #No Win Detected
     return "No Win"
 
+def player_setup():
+    colors = ""
+    for x in range(0, len(available_colors), 1):
+        colors += available_colors[x]
+        if x < len(available_colors) - 1:
+            colors += ", " 
+        else:
+            colors += "! "
+
+    name = input("Player 1 what is your name? ")
+    color = input(name + " what would you like your color to be? Your options are: " + colors)
+    available_colors.remove(color.title())
+    player_1 = Player(name)
+    player_1.assign_color(color.lower())
+
+    colors = ""
+    for x in range(0, len(available_colors), 1):
+        colors += available_colors[x]
+        if x < len(available_colors) - 1:
+            colors += ", " 
+        else:
+            colors += "! "
+
+    name = input("Player 2 what is your name? ")
+    color = input(name + " what would you like your color to be? Your options are: " + colors)
+    available_colors.remove(color.title())
+    player_2 = Player(name)
+    player_2.assign_color(color.lower())
+
+    return player_1, player_2
 
 
-player_1 = Player("Riley")
-player_1.assign_color("red")
-
-player_2 = Player("Nolan")
-player_2.assign_color("blue")
-
+player_1, player_2 = player_setup()
 generate_board(board_x, board_y)
 print_board()
 print(check_for_win())
