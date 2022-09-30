@@ -19,8 +19,8 @@ class Player:
 
 
 #game piece visual icons
-red = GamePiece("(R)")
-blue = GamePiece("(B)")
+red = GamePiece("\033[0;31m(R)\033[0m")
+blue = GamePiece("\033[0;34m(B)\033[0m")
 empty = GamePiece("   ")
 
 board = []
@@ -37,14 +37,17 @@ def generate_board(x = 7, y = 6):
 
 def print_board(board_x, board_y):
     lines = []
+    print("\n \n")
     for y in range(0, board_y * 2 + 1, 1):
         lines.append("")
+        lines[y] += "     "
         for x in range(0, board_x, 1):
             if y % 2 == 0:
                 lines[y] += "*****"
             else:
                 lines[y] += "*{}*".format(board[x][board_y - 1 - int((y-1)/2)].color)
         print(lines[y])
+    print("\n \n")
 
 def check_y_value(column, board_y):
     for y in range(0, board_y, 1):
@@ -165,10 +168,56 @@ def play_game():
             first = randomize_first_player()
             if first == 1:
                 print(player1.name + " will be going first!")
-                temp = imput("Press enter when you are ready to begin!")
+                temp = input("Press enter when you are ready to begin!")
+                os.system('cls')
+                while win == False:
+                    print_board(board_x, board_y)
+                    column = input(player1.name + " what column would you like to place your token in? (1-" + str(board_x) + "): ")
+                    play_token(player1, int(column) - 1, board_y)
+                    os.system('cls')
+                    print_board(board_x, board_y)
+                    #print(check_for_win(board_x, board_y))
+                    if check_for_win(board_x, board_y) == "win":
+                        win == True
+                        print(player1.name + " has won the game!")
+                        return
+                    temp = input("enter")
+                    column = input(player2.name + " what column would you like to place your token in? (1-" + str(board_x) + "): ")
+                    play_token(player2, int(column) - 1, board_y)
+                    os.system('cls')
+                    print_board(board_x, board_y)
+                    if check_for_win(board_x, board_y) == "win":
+                        win == True
+                        print(player2.name + " has won the game!")
+                        return
+                    temp = input("enter")
+                    os.system('cls')            
             elif first == 2:
                 print(player2.name + " will be going first!")
-                temp = imput("Press enter when you are ready to begin!") 
+                temp = input("Press enter when you are ready to begin!")
+                os.system('cls')
+                while win == False:
+                    print_board(board_x, board_y)
+                    column = input(player2.name + " what column would you like to place your token in? (1-" + str(board_x) + "): ")
+                    play_token(player2, int(column) - 1, board_y)
+                    os.system('cls')
+                    print_board(board_x, board_y)
+                    #print(check_for_win(board_x, board_y))
+                    if check_for_win(board_x, board_y) == "win":
+                        win == True
+                        print(player2.name + " has won the game!")
+                        return
+                    temp = input("enter")
+                    column = input(player1.name + " what column would you like to place your token in? (1-" + str(board_x) + "): ")
+                    play_token(player1, int(column) - 1, board_y)
+                    os.system('cls')
+                    print_board(board_x, board_y)
+                    if check_for_win(board_x, board_y) == "win":
+                        win == True
+                        print(player1.name + " has won the game!")
+                        return
+                    temp = input("enter")
+                    os.system('cls')             
             else:
                 return "error"
         else:
@@ -193,7 +242,7 @@ def play_game():
                 print_board(board_x, board_y)
                 if check_for_win(board_x, board_y) == "win":
                     win == True
-                    print(player1.name + " has won the game!")
+                    print(player2.name + " has won the game!")
                     return
                 temp = input("enter")
                 os.system('cls')            
