@@ -21,10 +21,11 @@ class Player:
 #game piece visual icons
 red = GamePiece("\033[0;31m(R)\033[0m")
 blue = GamePiece("\033[0;34m(B)\033[0m")
+pink = GamePiece("\033[0;35m(P)\033[0m")
 empty = GamePiece("   ")
 
 board = []
-available_colors = ["Red", "Blue"]
+available_colors = ["Red", "Blue", "Pink"]
 
 space = """\n \n"""
 
@@ -65,6 +66,8 @@ def play_token(player, column, board_y):
         board[column][y] = red
     elif player.color == "blue":
         board[column][y] = blue
+    elif player.color == "pink":
+        board[column][y] = pink
     else:
         return "Invalid Color"
 
